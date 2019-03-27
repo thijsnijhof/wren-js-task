@@ -19,8 +19,7 @@ The fields are green and Wren are venturing out to become a shepherd.
 
 Your task is to extend the provided code with functionality and logic to create a 'field', add sheep to the field and allow the sheep to breed.
 
-### Requirements
-
+### Requirements
 The specification of what is required is as follows:
 
 1) Create a field in which to add the sheep
@@ -31,9 +30,9 @@ The specification of what is required is as follows:
 
 Logic that must be factored in:
 
-a) The probability of a female sheep giving birth after mating is 50%
-b) Branded sheep must be highlighted in green
-c) Branded sheep are not able to breed
+1) The probability of a female sheep giving birth after mating is 50%
+2) Branded sheep must be highlighted in green
+3) Branded sheep are not able to breed
 
 It's up to you how you represent the field, this can be anything from a HTML table to a fully rendered WebGL canvas. Use common sense to define your rules about which sheep can breed with each other, and include them when you return your submission.
 
