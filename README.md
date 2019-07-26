@@ -1,7 +1,7 @@
 # Wren Kitchens Development Task
 
 ## Getting Started
-The aim of the task is to read the scenario and produce an application that fulfills the requirements listed below and then submit the result as a tar.gz file to: robert.bollons@wrenkitchens.com.
+The aim of the task is to read the scenario and produce an application that fulfills the requirements listed below.
 
 We have included a base app as a starting point.
 
