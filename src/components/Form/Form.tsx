@@ -9,11 +9,7 @@ interface IState {
 
 const GENDERS = ["male", "female"];
 
-const Form: React.FunctionComponent<IState> = ({
-  name,
-  gender,
-  displayError
-}: IState) => {
+const Form: React.FunctionComponent = () => {
   const [formState, setFormState] = useState<IState>({
     name: "",
     gender: "",
@@ -28,7 +24,7 @@ const Form: React.FunctionComponent<IState> = ({
     setFormState({
       ...formState,
       [event.target.name]: event.target.value
-    } as Pick<IState, keyof IState>);
+    });
   };
 
   const onHandleSubmit = () => {
@@ -38,6 +34,7 @@ const Form: React.FunctionComponent<IState> = ({
         keyof IState
       >);
     }
+    // submit form
   };
 
   return (
@@ -48,11 +45,11 @@ const Form: React.FunctionComponent<IState> = ({
         placeholder="Sheep name"
         aria-label="Sheep name with a select element for gender options and a submit button"
         name="name"
-        value={name}
+        value={formState.name}
         onChange={onHandleChange}
       />
 
-      {displayError && (
+      {formState.displayError && (
         <div className="invalid-feedback">Please enter a valid name.</div>
       )}
 
@@ -61,7 +58,7 @@ const Form: React.FunctionComponent<IState> = ({
         aria-label="Select sheep gender"
         defaultValue="male"
         name="gender"
-        value={gender}
+        value={formState.gender}
         onChange={onHandleChange}
       >
         {GENDERS.map(gender => (
