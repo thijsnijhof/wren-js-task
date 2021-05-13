@@ -7,9 +7,13 @@ interface IState {
   displayError: boolean;
 }
 
+interface IFormProps {
+  updateArray: (name: string, gender: string, branded: boolean) => void;
+}
+
 const GENDERS = ["male", "female"];
 
-const Form: React.FunctionComponent = () => {
+const Form: React.FunctionComponent<IFormProps> = ({ updateArray }) => {
   const [formState, setFormState] = useState<IState>({
     name: "",
     gender: "",
@@ -27,14 +31,16 @@ const Form: React.FunctionComponent = () => {
     });
   };
 
-  const onHandleSubmit = () => {
+  const onHandleSubmit = (event: React.FormEvent): void => {
+    event.preventDefault();
+    console.log(isName(formState.name));
     if (!formState.name || !isName(formState.name)) {
-      setFormState({ ...formState, displayError: true } as Pick<
-        IState,
-        keyof IState
-      >);
+      setFormState({ ...formState, displayError: true });
+      return;
     }
     // submit form
+    updateArray(formState.name, formState.gender, false);
+    setFormState({ name: "", gender: "", displayError: false });
   };
 
   return (
@@ -56,13 +62,14 @@ const Form: React.FunctionComponent = () => {
       <select
         className="form-select"
         aria-label="Select sheep gender"
-        defaultValue="male"
         name="gender"
         value={formState.gender}
         onChange={onHandleChange}
       >
-        {GENDERS.map(gender => (
-          <option value={gender}>{gender}</option>
+        {GENDERS.map((gender, i) => (
+          <option key={i} value={gender}>
+            {gender}
+          </option>
         ))}
       </select>
       <button className="btn btn-primary" type="submit" name="submit">
