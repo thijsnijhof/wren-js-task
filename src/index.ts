@@ -1,15 +1,12 @@
-import 'bootstrap/dist/css/bootstrap.css';
+import "bootstrap/dist/css/bootstrap.css";
 
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 
-import { Root } from './root';
+import { Root } from "./root";
 
 function main() {
-    ReactDOM.render(
-        React.createElement(Root),
-        document.getElementById('app')
-    );
+  ReactDOM.render(React.createElement(Root), document.getElementById("app"));
 }
 
 main();
