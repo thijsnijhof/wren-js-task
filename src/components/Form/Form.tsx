@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import { isName } from "../../utils/validator";
+import { GENDERS } from "../constants/constants";
 
 interface IState {
   name: string;
@@ -11,12 +13,10 @@ interface IFormProps {
   updateArray: (name: string, gender: string, branded: boolean) => void;
 }
 
-const GENDERS = ["male", "female"];
-
 const Form: React.FunctionComponent<IFormProps> = ({ updateArray }) => {
   const [formState, setFormState] = useState<IState>({
     name: "",
-    gender: "",
+    gender: "male",
     displayError: false
   });
 
@@ -33,14 +33,15 @@ const Form: React.FunctionComponent<IFormProps> = ({ updateArray }) => {
 
   const onHandleSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
-    console.log(isName(formState.name));
-    if (!formState.name || !isName(formState.name)) {
+    const name = formState.name ? formState.name.trim() : "";
+
+    if (!name || !isName(name)) {
       setFormState({ ...formState, displayError: true });
       return;
     }
-    // submit form
-    updateArray(formState.name, formState.gender, false);
-    setFormState({ name: "", gender: "", displayError: false });
+
+    updateArray(name, formState.gender, false);
+    setFormState({ name: "", gender: formState.gender, displayError: false });
   };
 
   return (
@@ -56,7 +57,7 @@ const Form: React.FunctionComponent<IFormProps> = ({ updateArray }) => {
       />
 
       {formState.displayError && (
-        <div className="invalid-feedback">Please enter a valid name.</div>
+        <ErrorMessage message="Please enter a valid name." />
       )}
 
       <select
