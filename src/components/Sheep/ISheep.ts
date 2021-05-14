@@ -3,4 +3,6 @@ export interface ISheep {
   gender: string;
   branded: boolean;
   id: number;
+  x: number;
+  y: number;
 }

@@ -6,19 +6,27 @@ import { SHEEP_NAMES, GENDERS } from "../components/constants/constants";
 import {
   getRandomId,
   getRandomIndex,
-  getFiftyFiftyChance
+  getFiftyFiftyChance,
+  getRandomCoord
 } from "../utils/random";
 
-import Sheep from "../components/Sheep/Sheep";
+// import Sheep from "../components/Sheep/Sheep";
+import Field from "../components/Field/Field";
 
 const Root: React.FunctionComponent = () => {
   const [sheepArray, updateSheepArray] = useState<ISheep[]>([]);
   const [displayError, setDisplayError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const updateArray = (name: string, gender: string, branded: boolean) => {
+  const updateArray = (
+    name: string,
+    gender: string,
+    branded: boolean,
+    x: number,
+    y: number
+  ) => {
     const id: number = sheepArray.length;
-    const newSheep: ISheep = { name, gender, branded, id };
+    const newSheep: ISheep = { name, gender, branded, id, x, y };
     updateSheepArray(sheepArray => [...sheepArray, newSheep]);
   };
 
@@ -71,8 +79,9 @@ const Root: React.FunctionComponent = () => {
   const spawnSheep = () => {
     const name = SHEEP_NAMES[getRandomIndex(SHEEP_NAMES)];
     const gender = GENDERS[getRandomIndex(GENDERS)];
-
-    updateArray(name, gender, false);
+    const x = getRandomCoord(300);
+    const y = getRandomCoord(400);
+    updateArray(name, gender, false, x, y);
   };
 
   const breedSheep = (): void => {
@@ -106,38 +115,26 @@ const Root: React.FunctionComponent = () => {
   };
 
   return (
-    <div className="container">
-      <Form updateArray={updateArray} />
-      <button
-        className="btn btn-success"
-        type="button"
-        name="button"
-        onClick={brandSheep}
-      >
-        Brand Sheep
-      </button>
-
-      <button
-        className="btn btn-info"
-        type="button"
-        name="button"
-        onClick={breedSheep}
-        disabled={getUnbrandedSheep().length < 2}
-      >
-        Breed Sheep
-      </button>
-
-      {displayError && <ErrorMessage message={errorMessage} />}
-
-      {sheepArray.map((sheep, i) => (
-        <Sheep
-          key={i}
-          name={sheep.name}
-          gender={sheep.gender}
-          branded={sheep.branded}
-          id={sheep.id}
-        />
-      ))}
+    <div className="container-fluid">
+      <div className="row mt-4">
+        <div className="col-sm-4 mb-4">
+          <div className="card">
+            <div className="card-body">
+              <Form
+                updateArray={updateArray}
+                breedSheep={breedSheep}
+                brandSheep={brandSheep}
+                breedDisabled={getUnbrandedSheep().length < 2}
+                brandDisabled={getUnbrandedSheep().length === 0}
+              />
+              {displayError && <ErrorMessage message={errorMessage} />}
+            </div>
+          </div>
+        </div>
+        <div className="col-sm-8">
+          <Field data={sheepArray} />
+        </div>
+      </div>
     </div>
   );
 };
