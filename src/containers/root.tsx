@@ -1,23 +1,73 @@
 import React, { useState } from "react";
 import Form from "../components/Form/Form";
-import { Sheep } from "../components/Sheep/SheepType";
+import { ISheep } from "../components/Sheep/ISheep";
 
 const Root: React.FunctionComponent = () => {
-  const [sheepArray, updateSheepArray] = useState<Sheep[]>([]);
+  const [sheepArray, updateSheepArray] = useState<ISheep[]>([]);
+  const [displayError, setDisplayError] = useState<boolean>(false);
 
   const updateArray = (name: string, gender: string, branded: boolean) => {
-    const newSheep: Sheep = { name, gender, branded };
+    const id: number = sheepArray.length;
+    const newSheep: ISheep = { name, gender, branded, id };
     updateSheepArray(sheepArray => [...sheepArray, newSheep]);
+  };
+
+  const getUnbrandedSheep = () => {
+    return sheepArray.filter(sheep => !sheep.branded);
+  };
+
+  const getRandomId = (array: Array<ISheep>): number => {
+    const randomIndex = Math.floor(Math.random() * array.length);
+    return array[randomIndex]["id"];
+  };
+
+  const getSheepColor = (sheep: ISheep): string => {
+    if (sheep.branded) return "bg-success";
+    if (sheep.gender === "female") return "bg-danger";
+    return "bg-primary";
+  };
+
+  const updateSheep = (id: number): void => {
+    const clonedArray: ISheep[] = [...sheepArray];
+    const indexToUpdate: number = clonedArray.findIndex(
+      sheep => sheep.id === id
+    );
+
+    clonedArray[indexToUpdate]["branded"] = true;
+
+    updateSheepArray(clonedArray);
+  };
+
+  const brandSheep = (): void => {
+    setDisplayError(false);
+
+    if (!getUnbrandedSheep() || getUnbrandedSheep().length === 0) {
+      setDisplayError(true);
+      return;
+    }
+
+    const idToUpdate = getRandomId(getUnbrandedSheep());
+    updateSheep(idToUpdate);
   };
 
   return (
     <div className="container">
       <Form updateArray={updateArray} />
+      <button
+        className="btn btn-success"
+        type="button"
+        name="button"
+        onClick={brandSheep}
+      >
+        Brand Sheep
+      </button>
+
+      {displayError && (
+        <div className="">There are no sheep that can be branded.</div>
+      )}
+
       {sheepArray.map((sheep, i) => (
-        <div
-          key={i}
-          className={sheep.gender === "female" ? "bg-danger" : "bg-primary"}
-        >
+        <div key={i} className={getSheepColor(sheep)}>
           <p>{sheep.name}</p>
         </div>
       ))}

@@ -16,7 +16,7 @@ const GENDERS = ["male", "female"];
 const Form: React.FunctionComponent<IFormProps> = ({ updateArray }) => {
   const [formState, setFormState] = useState<IState>({
     name: "",
-    gender: "",
+    gender: "male",
     displayError: false
   });
 
@@ -33,14 +33,15 @@ const Form: React.FunctionComponent<IFormProps> = ({ updateArray }) => {
 
   const onHandleSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
-    console.log(isName(formState.name));
-    if (!formState.name || !isName(formState.name)) {
+    const name: string = formState.name ? formState.name.trim() : "";
+
+    if (!name || !isName(name)) {
       setFormState({ ...formState, displayError: true });
       return;
     }
-    // submit form
-    updateArray(formState.name, formState.gender, false);
-    setFormState({ name: "", gender: "", displayError: false });
+
+    updateArray(name, formState.gender, false);
+    setFormState({ name: "", gender: formState.gender, displayError: false });
   };
 
   return (
@@ -56,7 +57,7 @@ const Form: React.FunctionComponent<IFormProps> = ({ updateArray }) => {
       />
 
       {formState.displayError && (
-        <div className="invalid-feedback">Please enter a valid name.</div>
+        <div className="">Please enter a valid name.</div>
       )}
 
       <select
