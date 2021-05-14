@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import { isName } from "../../utils/validator";
+import { GENDERS } from "../constants/constants";
 
 interface IState {
   name: string;
@@ -11,8 +12,6 @@ interface IState {
 interface IFormProps {
   updateArray: (name: string, gender: string, branded: boolean) => void;
 }
-
-const GENDERS = ["male", "female"];
 
 const Form: React.FunctionComponent<IFormProps> = ({ updateArray }) => {
   const [formState, setFormState] = useState<IState>({
