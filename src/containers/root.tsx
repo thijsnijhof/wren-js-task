@@ -9,6 +9,8 @@ import {
   getFiftyFiftyChance
 } from "../utils/random";
 
+import Sheep from "../components/Sheep/Sheep";
+
 const Root: React.FunctionComponent = () => {
   const [sheepArray, updateSheepArray] = useState<ISheep[]>([]);
   const [displayError, setDisplayError] = useState<boolean>(false);
@@ -22,12 +24,6 @@ const Root: React.FunctionComponent = () => {
 
   const getUnbrandedSheep = () => {
     return sheepArray.filter(sheep => !sheep.branded);
-  };
-
-  const getSheepColor = (sheep: ISheep): string => {
-    if (sheep.branded) return "bg-success";
-    if (sheep.gender === "female") return "bg-danger";
-    return "bg-primary";
   };
 
   const getSheep = (id: number): ISheep => {
@@ -134,9 +130,13 @@ const Root: React.FunctionComponent = () => {
       {displayError && <ErrorMessage message={errorMessage} />}
 
       {sheepArray.map((sheep, i) => (
-        <div key={i} className={getSheepColor(sheep)}>
-          <p>{sheep.name}</p>
-        </div>
+        <Sheep
+          key={i}
+          name={sheep.name}
+          gender={sheep.gender}
+          branded={sheep.branded}
+          id={sheep.id}
+        />
       ))}
     </div>
   );
