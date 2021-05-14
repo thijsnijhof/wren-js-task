@@ -13,7 +13,7 @@ interface IFieldProps {
 const Field: React.FunctionComponent<IFieldProps> = ({ data}) => {
   const ref = useRef<HTMLCanvasElement>(null);
   const style = {
-    background: "green"
+    background: "transparent"
   };
 
   const getImgSource = (branded: boolean, gender: string): string => {
@@ -31,7 +31,7 @@ const Field: React.FunctionComponent<IFieldProps> = ({ data}) => {
 
       const img = new Image();
       img.src = getImgSource(sheep.branded, sheep.gender);
-      context.fillText(sheep.name, sheep.x, sheep.y - 10);
+      context.fillText(sheep.name, sheep.x + 16, sheep.y - 10);
       img.onload = function() {
         context.drawImage(img, sheep.x, sheep.y, 32, 32);
       }
@@ -45,7 +45,7 @@ const Field: React.FunctionComponent<IFieldProps> = ({ data}) => {
     }
   }, [drawSheep]);
 
-  return <canvas ref={ref} width="300" height="400" style={style} />;
+  return <canvas ref={ref} width="500" height="600" style={style} className="rounded"/>;
 };
 
 export default Field;

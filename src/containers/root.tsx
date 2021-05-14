@@ -9,9 +9,9 @@ import {
   getFiftyFiftyChance,
   getRandomCoord
 } from "../utils/random";
-
-// import Sheep from "../components/Sheep/Sheep";
 import Field from "../components/Field/Field";
+import "./root.css";
+import sheepmale from "../assets/images/sheepmale.png";
 
 const Root: React.FunctionComponent = () => {
   const [sheepArray, updateSheepArray] = useState<ISheep[]>([]);
@@ -115,10 +115,25 @@ const Root: React.FunctionComponent = () => {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid bg-transparent">
       <div className="row mt-4">
-        <div className="col-sm-4 mb-4">
-          <div className="card">
+        <div className="col-sm-4 mb-4 mb-sm-0 mb-md-0 mb-lg-0 d-flex flex-column">
+          <div className="card mb-2 border-brown rounded">
+            <div className="card-body bg-brown">
+              <div className="d-flex">
+                <img
+                  className="mr-4"
+                  src={sheepmale}
+                  alt="male sheep"
+                  style={{ height: 22, width: 22 }}
+                />
+                <h5 className="card-title text-uppercase text-white">
+                  Sheep Breeder
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div className="card flex-grow-1 bg-green">
             <div className="card-body">
               <Form
                 updateArray={updateArray}

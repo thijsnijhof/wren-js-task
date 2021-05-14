@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+    font-family: 'Press Start 2P', cursive !important;
+}
+
+.bg-image {
+    background-image: url('../assets/images/background.png');
+    background-position: center;
+    background-size: auto;
+    background-repeat: repeat;
+}
+
+.bg-green {
+    background-color: #accc14;
+}
+.bg-brown {
+    background-color: #261f16;
+}
+
+
+.border-brown {
+    border: 1px solid #261f16;
+}

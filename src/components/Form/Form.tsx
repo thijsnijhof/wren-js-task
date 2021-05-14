@@ -76,6 +76,7 @@ const Form: React.FunctionComponent<IFormProps> = ({
           name="name"
           value={formState.name}
           onChange={onHandleChange}
+          maxLength={50}
         />
 
         {formState.displayError && (
@@ -85,14 +86,14 @@ const Form: React.FunctionComponent<IFormProps> = ({
 
       <div className="form-group">
         <select
-          className="form-control"
+          className="form-control text-capitalize"
           aria-label="Select sheep gender"
           name="gender"
           value={formState.gender}
           onChange={onHandleChange}
         >
           {GENDERS.map((gender, i) => (
-            <option key={i} value={gender}>
+            <option className="text-capitalize" key={i} value={gender}>
               {gender}
             </option>
           ))}
