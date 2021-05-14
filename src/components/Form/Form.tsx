@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import { isName } from "../../utils/validator";
 
 interface IState {
@@ -33,7 +34,7 @@ const Form: React.FunctionComponent<IFormProps> = ({ updateArray }) => {
 
   const onHandleSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
-    const name: string = formState.name ? formState.name.trim() : "";
+    const name = formState.name ? formState.name.trim() : "";
 
     if (!name || !isName(name)) {
       setFormState({ ...formState, displayError: true });
@@ -57,7 +58,7 @@ const Form: React.FunctionComponent<IFormProps> = ({ updateArray }) => {
       />
 
       {formState.displayError && (
-        <div className="">Please enter a valid name.</div>
+        <ErrorMessage message="Please enter a valid name." />
       )}
 
       <select
