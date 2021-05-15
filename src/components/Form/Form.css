@@ -19,3 +19,15 @@
     cursor: not-allowed;
     transform: translateY(0px);
 }
+
+.input-custom {
+    background: transparent;
+    border: 2px solid #558b2f;
+    border-radius: 0;
+}
+
+.input-custom:active, .input-custom:focus, .input-custom:focus-visible {
+    background: transparent;
+    outline: none;
+    border-color: #689f38;
+}

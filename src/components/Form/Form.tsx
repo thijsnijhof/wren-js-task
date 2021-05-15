@@ -74,7 +74,7 @@ const Form: React.FunctionComponent<IFormProps> = ({
         </label>
         <input
           type="text"
-          className="form-control"
+          className="form-control input-custom"
           placeholder="Sheep name"
           aria-label="Sheep name with a select element for gender options and a submit button"
           name="name"
@@ -93,7 +93,7 @@ const Form: React.FunctionComponent<IFormProps> = ({
           Select a gender
         </label>
         <select
-          className="form-control text-capitalize"
+          className="form-control text-capitalize input-custom"
           aria-label="Select sheep gender"
           name="gender"
           value={formState.gender}
