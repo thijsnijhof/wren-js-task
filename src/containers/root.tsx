@@ -1,46 +1,71 @@
+/*
+ * Entry component of the app that adheres to the following business logic:
+ * Adds a new sheep to the field based on the selection of the form (name + gender)
+ *
+ * Allows the user to brand a sheep on the field when there are unbranded sheep on the field
+ * Disables the "Brand a sheep" button when: all sheep are branded || there are no sheep on the field
+ * Disables the "Breed a sheep" button when: there are no sheep of the opposite sex on the field || only one sheep is on the field
+ * Branding a sheep colors a random unbranded sheep green by updating the "branded" property on the object.
+ *
+ * When two sheep of opposite sex are on the field, and are unbranded, the user can breed sheep.
+ * This has a 50% chance of spawning a new sheep with a random name and a random gender
+ * On a successful spawn, a success message is displayed with the male sheeps' name, the female sheeps' name, and the new sheeps' name.
+ * On an unsuccessful spawn, an error message is displayed with the male sheeps' name, the female sheeps' name.
+ */
 import React, { useState } from "react";
 import Form from "../components/Form/Form";
-import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
-import { ISheep } from "../components/Sheep/ISheep";
+import Message from "../components/Message/Message";
+import Field from "../components/Field/Field";
+import { ISheep } from "../interfaces/ISheep";
 import { SHEEP_NAMES, GENDERS } from "../components/constants/constants";
 import {
   getRandomId,
   getRandomIndex,
-  getFiftyFiftyChance
+  getFiftyFiftyChance,
+  getRandomCoord
 } from "../utils/random";
+import "./root.css";
+import sheepmale from "../assets/images/sheepmale.png";
 
 const Root: React.FunctionComponent = () => {
   const [sheepArray, updateSheepArray] = useState<ISheep[]>([]);
   const [displayError, setDisplayError] = useState<boolean>(false);
+  const [displaySuccess, setDisplaySuccess] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
 
-  const updateArray = (name: string, gender: string, branded: boolean) => {
+  const updateArray = (
+    name: string,
+    gender: string,
+    branded: boolean,
+    x: number,
+    y: number
+  ): void => {
     const id: number = sheepArray.length;
-    const newSheep: ISheep = { name, gender, branded, id };
+    const newSheep: ISheep = { name, gender, branded, id, x, y };
     updateSheepArray(sheepArray => [...sheepArray, newSheep]);
   };
 
-  const getUnbrandedSheep = () => {
+  const getUnbrandedSheep = (): ISheep[] => {
     return sheepArray.filter(sheep => !sheep.branded);
   };
 
-  const getSheepColor = (sheep: ISheep): string => {
-    if (sheep.branded) return "bg-success";
-    if (sheep.gender === "female") return "bg-danger";
-    return "bg-primary";
+  const getUnbrandedMaleSheep = (): ISheep[] => {
+    return sheepArray.filter(
+      sheep => !sheep.branded && sheep.gender === "male"
+    );
+  };
+
+  const getUnbrandedFemaleSheep = (): ISheep[] => {
+    return sheepArray.filter(
+      sheep => !sheep.branded && sheep.gender === "female"
+    );
   };
 
   const getSheep = (id: number): ISheep => {
     const unbrandedSheepArray = getUnbrandedSheep();
     const sheepIndex = unbrandedSheepArray.findIndex(sheep => sheep.id === id);
     return unbrandedSheepArray[sheepIndex];
-  };
-
-  const canReproduce = (
-    firstSheepGender: string,
-    secondSheepGender: string
-  ): boolean => {
-    return firstSheepGender !== secondSheepGender;
   };
 
   const updateSheep = (id: number): void => {
@@ -53,13 +78,15 @@ const Root: React.FunctionComponent = () => {
     updateSheepArray(clonedArray);
   };
 
-  const resetErrors = (): void => {
+  const resetMessages = (): void => {
     setDisplayError(false);
     setErrorMessage("");
+    setDisplaySuccess(false);
+    setSuccessMessage("");
   };
 
   const brandSheep = (): void => {
-    resetErrors();
+    resetMessages();
     const unbrandedSheep = getUnbrandedSheep();
 
     if (!unbrandedSheep || unbrandedSheep.length === 0) {
@@ -72,72 +99,90 @@ const Root: React.FunctionComponent = () => {
     updateSheep(idToUpdate);
   };
 
-  const spawnSheep = () => {
+  const spawnSheep = (
+    firstSheepName: string,
+    secondSheepName: string
+  ): void => {
     const name = SHEEP_NAMES[getRandomIndex(SHEEP_NAMES)];
     const gender = GENDERS[getRandomIndex(GENDERS)];
+    const x = getRandomCoord(300);
+    const y = getRandomCoord(400);
 
-    updateArray(name, gender, false);
+    setDisplaySuccess(true);
+    setSuccessMessage(
+      `${firstSheepName} and ${secondSheepName} created a new sheep called ${name}!`
+    );
+
+    updateArray(name, gender, false, x, y);
   };
 
   const breedSheep = (): void => {
-    resetErrors();
-    const unbrandedSheep = getUnbrandedSheep();
-    const firstSheepId = getRandomId(unbrandedSheep);
-    const secondSheepId = getRandomId(
-      unbrandedSheep.filter(sheep => sheep.id !== firstSheepId)
-    );
+    resetMessages();
+    const unbrandedMaleSheep = getUnbrandedMaleSheep();
+    const unbrandedFemaleSheep = getUnbrandedFemaleSheep();
 
-    const firstSheep = getSheep(firstSheepId);
-    const secondSheep = getSheep(secondSheepId);
-
-    if (!canReproduce(firstSheep.gender, secondSheep.gender)) {
-      setDisplayError(true);
-      setErrorMessage(
-        "The two sheep had fun, but two sheep of the same gender can't reproduce."
-      );
-      return;
-    }
+    const firstSheep = getSheep(getRandomId(unbrandedMaleSheep));
+    const secondSheep = getSheep(getRandomId(unbrandedFemaleSheep));
 
     if (!getFiftyFiftyChance()) {
       setDisplayError(true);
       setErrorMessage(
-        "The two sheep tried to reproduce, but were not successful. Better luck next time!"
+        `${firstSheep.name} and ${
+          secondSheep.name
+        } tried to reproduce, but were not successful. Better luck next time!`
       );
       return;
     }
 
-    spawnSheep();
+    spawnSheep(firstSheep.name, secondSheep.name);
   };
 
   return (
-    <div className="container">
-      <Form updateArray={updateArray} />
-      <button
-        className="btn btn-success"
-        type="button"
-        name="button"
-        onClick={brandSheep}
-      >
-        Brand Sheep
-      </button>
+    <div className="container-fluid bg-transparent">
+      <div className="row mt-4">
+        <div className="col-md-4 mb-4 mb-sm-4 mb-md-0 mb-lg-0 d-flex flex-column">
+          <div className="card mb-2 border-brown rounded">
+            <div className="card-body bg-brown">
+              <div className="d-flex">
+                <img
+                  className="mr-4"
+                  src={sheepmale}
+                  alt="male sheep"
+                  style={{ height: 22, width: 22 }}
+                />
+                <h5 className="card-title text-uppercase text-white mb-0">
+                  Sheep Breeder
+                </h5>
+              </div>
+            </div>
+          </div>
 
-      <button
-        className="btn btn-info"
-        type="button"
-        name="button"
-        onClick={breedSheep}
-        disabled={getUnbrandedSheep().length < 2}
-      >
-        Breed Sheep
-      </button>
+          <div className="card flex-grow-1 bg-green">
+            <div className="card-body">
+              <Form
+                updateArray={updateArray}
+                breedSheep={breedSheep}
+                brandSheep={brandSheep}
+                breedDisabled={
+                  getUnbrandedFemaleSheep().length < 1 ||
+                  getUnbrandedMaleSheep().length < 1
+                }
+                brandDisabled={getUnbrandedSheep().length === 0}
+              />
 
-      {displayError && <ErrorMessage message={errorMessage} />}
+              {displayError && <Message type="error" message={errorMessage} />}
 
-      {sheepArray.map((sheep, i) => (
-        <div key={i} className={getSheepColor(sheep)}>
-          <p>{sheep.name}</p>
+              {displaySuccess && (
+                <Message type="success" message={successMessage} />
+              )}
+            </div>
+          </div>
         </div>
-      ))}
+
+        <div className="col-md-8 col-lg-6">
+          <Field data={sheepArray} />
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,0 +1,13 @@
+.message {
+    padding: 4px 8px;
+}
+
+.message-error {
+    background: #af4444;
+    color: #fc8f8f;
+}
+
+.message-success {
+    background: #80c900;
+    color: #d2f88a;
+}
