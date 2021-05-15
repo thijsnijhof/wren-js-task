@@ -31,3 +31,11 @@
     outline: none;
     border-color: #689f38;
 }
+
+.icon-image {
+    height: 18px;
+    width: 18px;
+    background-size: cover;
+    display: inline-block;
+    margin-right: 5px;
+}

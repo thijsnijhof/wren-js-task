@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useRef, useEffect } from "react";
-import { ISheep } from "../Sheep/ISheep";
+import { ISheep } from "../../interfaces/ISheep";
 import sheepmale from "../../assets/images/sheepmale.png";
 import sheepfemale from "../../assets/images/sheepfemale.png";
 import sheepmale_branded from "../../assets/images/sheepmale_branded.png";

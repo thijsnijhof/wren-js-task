@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import Message from "../Message/Message";
 import { isName } from "../../utils/validator";
 import { GENDERS } from "../constants/constants";
 import { getRandomCoord } from "../../utils/random";
 import "./Form.css";
+import sheepmale from "../../assets/images/sheepmale.png";
+import heart from "../../assets/images/heart.png";
+import bucket from "../../assets/images/bucket.png";
 
 interface IState {
   name: string;
@@ -84,7 +87,7 @@ const Form: React.FunctionComponent<IFormProps> = ({
         />
 
         {formState.displayError && (
-          <ErrorMessage message="Please enter a valid name." />
+          <Message type="error" message="Please enter a valid name." />
         )}
       </div>
 
@@ -113,6 +116,12 @@ const Form: React.FunctionComponent<IFormProps> = ({
           type="submit"
           name="submit"
         >
+          <i
+            className="icon-image"
+            style={{
+              backgroundImage: `url(${sheepmale})`
+            }}
+          />
           Add Sheep
         </button>
 
@@ -123,6 +132,12 @@ const Form: React.FunctionComponent<IFormProps> = ({
           onClick={brandSheep}
           disabled={brandDisabled}
         >
+          <i
+            className="icon-image"
+            style={{
+              backgroundImage: `url(${bucket})`
+            }}
+          />
           Brand Sheep
         </button>
 
@@ -133,6 +148,12 @@ const Form: React.FunctionComponent<IFormProps> = ({
           onClick={breedSheep}
           disabled={breedDisabled}
         >
+          <i
+            className="icon-image"
+            style={{
+              backgroundImage: `url(${heart})`
+            }}
+          />
           Breed Sheep
         </button>
       </div>
