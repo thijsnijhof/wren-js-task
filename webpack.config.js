@@ -3,9 +3,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ROOT_PATH = path.resolve(__dirname, "");
 const SRC_PATH = path.resolve(__dirname, "src");
-console.log(ROOT_PATH);
-console.log(SRC_PATH);
-const DIST_PATH = path.resolve(ROOT_PATH, "dist");
+const BUILD_PATH = path.resolve(ROOT_PATH, "build");
 
 module.exports = {
   entry: path.resolve(SRC_PATH, "index.ts"),
@@ -51,7 +49,7 @@ module.exports = {
   ],
 
   output: {
-    path: DIST_PATH,
+    path: BUILD_PATH,
     filename: "[name].js"
   }
 };

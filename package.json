@@ -1,6 +1,6 @@
 {
   "name": "starter_app",
-  "homepage": "https://github.com/thijsnijhof/wren-js-task",
+  "homepage": "https://thijsnijhof.github.io/wren-js-task",
   "version": "1.0.0",
   "description": "Wren Kitchens Starter Application",
   "main": "./dist/index.js",
