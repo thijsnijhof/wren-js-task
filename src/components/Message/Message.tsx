@@ -1,3 +1,6 @@
+/*
+ * Message component that displays either success or error message
+ */
 import React from "react";
 import "./Message.css";
 

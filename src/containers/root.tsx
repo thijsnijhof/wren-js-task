@@ -1,6 +1,21 @@
+/*
+ * Entry component of the app that adheres to the following business logic:
+ * Adds a new sheep to the field based on the selection of the form (name + gender)
+ *
+ * Allows the user to brand a sheep on the field when there are unbranded sheep on the field
+ * Disables the "Brand a sheep" button when: all sheep are branded || there are no sheep on the field
+ * Disables the "Breed a sheep" button when: there are no sheep of the opposite sex on the field || only one sheep is on the field
+ * Branding a sheep colors a random unbranded sheep green by updating the "branded" property on the object.
+ *
+ * When two sheep of opposite sex are on the field, and are unbranded, the user can breed sheep.
+ * This has a 50% chance of spawning a new sheep with a random name and a random gender
+ * On a successful spawn, a success message is displayed with the male sheeps' name, the female sheeps' name, and the new sheeps' name.
+ * On an unsuccessful spawn, an error message is displayed with the male sheeps' name, the female sheeps' name.
+ */
 import React, { useState } from "react";
 import Form from "../components/Form/Form";
 import Message from "../components/Message/Message";
+import Field from "../components/Field/Field";
 import { ISheep } from "../interfaces/ISheep";
 import { SHEEP_NAMES, GENDERS } from "../components/constants/constants";
 import {
@@ -9,7 +24,6 @@ import {
   getFiftyFiftyChance,
   getRandomCoord
 } from "../utils/random";
-import Field from "../components/Field/Field";
 import "./root.css";
 import sheepmale from "../assets/images/sheepmale.png";
 
@@ -26,23 +40,23 @@ const Root: React.FunctionComponent = () => {
     branded: boolean,
     x: number,
     y: number
-  ) => {
+  ): void => {
     const id: number = sheepArray.length;
     const newSheep: ISheep = { name, gender, branded, id, x, y };
     updateSheepArray(sheepArray => [...sheepArray, newSheep]);
   };
 
-  const getUnbrandedSheep = () => {
+  const getUnbrandedSheep = (): ISheep[] => {
     return sheepArray.filter(sheep => !sheep.branded);
   };
 
-  const getUnbrandedMaleSheep = () => {
+  const getUnbrandedMaleSheep = (): ISheep[] => {
     return sheepArray.filter(
       sheep => !sheep.branded && sheep.gender === "male"
     );
   };
 
-  const getUnbrandedFemaleSheep = () => {
+  const getUnbrandedFemaleSheep = (): ISheep[] => {
     return sheepArray.filter(
       sheep => !sheep.branded && sheep.gender === "female"
     );
@@ -64,7 +78,7 @@ const Root: React.FunctionComponent = () => {
     updateSheepArray(clonedArray);
   };
 
-  const resetMessages = () => {
+  const resetMessages = (): void => {
     setDisplayError(false);
     setErrorMessage("");
     setDisplaySuccess(false);
@@ -85,7 +99,10 @@ const Root: React.FunctionComponent = () => {
     updateSheep(idToUpdate);
   };
 
-  const spawnSheep = (firstSheepName: string, secondSheepName: string) => {
+  const spawnSheep = (
+    firstSheepName: string,
+    secondSheepName: string
+  ): void => {
     const name = SHEEP_NAMES[getRandomIndex(SHEEP_NAMES)];
     const gender = GENDERS[getRandomIndex(GENDERS)];
     const x = getRandomCoord(300);
@@ -139,6 +156,7 @@ const Root: React.FunctionComponent = () => {
               </div>
             </div>
           </div>
+
           <div className="card flex-grow-1 bg-green">
             <div className="card-body">
               <Form
@@ -160,6 +178,7 @@ const Root: React.FunctionComponent = () => {
             </div>
           </div>
         </div>
+
         <div className="col-md-8 col-lg-6">
           <Field data={sheepArray} />
         </div>

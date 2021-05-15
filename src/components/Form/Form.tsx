@@ -1,8 +1,17 @@
+/*
+ * Form component that allows you to do the following:
+ * Add a sheep name
+ * Select sheep gender
+ * Add a new sheep to the field
+ * Brand a random sheep
+ * Breed two random opposite sex sheep
+ * Displays error message on invalid name
+ */
 import React, { useState } from "react";
 import Message from "../Message/Message";
 import { isName } from "../../utils/validator";
-import { GENDERS } from "../constants/constants";
 import { getRandomCoord } from "../../utils/random";
+import { GENDERS } from "../constants/constants";
 import "./Form.css";
 import sheepmale from "../../assets/images/sheepmale.png";
 import heart from "../../assets/images/heart.png";

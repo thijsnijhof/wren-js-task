@@ -1,3 +1,6 @@
+/*
+ * Field component to draw sheep images and their respective names on a canvas element
+ */
 import * as React from "react";
 import { useRef, useEffect } from "react";
 import { ISheep } from "../../interfaces/ISheep";
@@ -24,7 +27,7 @@ const Field: React.FunctionComponent<IFieldProps> = ({ data}) => {
     return sheepfemale;
   };
 
-  const drawSheep = (context: CanvasRenderingContext2D) => {
+  const drawSheep = (context: CanvasRenderingContext2D): void => {
     data.forEach((sheep) => {
       context.font = "20px Arial, sans-serif";
       context.fillStyle = "white";
