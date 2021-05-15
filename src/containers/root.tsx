@@ -117,7 +117,7 @@ const Root: React.FunctionComponent = () => {
   return (
     <div className="container-fluid bg-transparent">
       <div className="row mt-4">
-        <div className="col-sm-4 mb-4 mb-sm-0 mb-md-0 mb-lg-0 d-flex flex-column">
+        <div className="col-md-4 mb-4 mb-sm-4 mb-md-0 mb-lg-0 d-flex flex-column">
           <div className="card mb-2 border-brown rounded">
             <div className="card-body bg-brown">
               <div className="d-flex">
@@ -127,7 +127,7 @@ const Root: React.FunctionComponent = () => {
                   alt="male sheep"
                   style={{ height: 22, width: 22 }}
                 />
-                <h5 className="card-title text-uppercase text-white">
+                <h5 className="card-title text-uppercase text-white mb-0">
                   Sheep Breeder
                 </h5>
               </div>
@@ -146,7 +146,7 @@ const Root: React.FunctionComponent = () => {
             </div>
           </div>
         </div>
-        <div className="col-sm-8">
+        <div className="col-md-8 col-lg-6">
           <Field data={sheepArray} />
         </div>
       </div>

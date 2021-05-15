@@ -5,6 +5,7 @@ import sheepmale from "../../assets/images/sheepmale.png";
 import sheepfemale from "../../assets/images/sheepfemale.png";
 import sheepmale_branded from "../../assets/images/sheepmale_branded.png";
 import sheepfemale_branded from "../../assets/images/sheepfemale_branded.png";
+import "./Field.css";
 
 interface IFieldProps {
   data: Array<ISheep>;
@@ -31,9 +32,9 @@ const Field: React.FunctionComponent<IFieldProps> = ({ data}) => {
 
       const img = new Image();
       img.src = getImgSource(sheep.branded, sheep.gender);
-      context.fillText(sheep.name, sheep.x + 16, sheep.y - 10);
+      context.fillText(sheep.name, sheep.x + 24, sheep.y - 10);
       img.onload = function() {
-        context.drawImage(img, sheep.x, sheep.y, 32, 32);
+        context.drawImage(img, sheep.x, sheep.y, 48, 48);
       }
     });
   }
@@ -45,7 +46,11 @@ const Field: React.FunctionComponent<IFieldProps> = ({ data}) => {
     }
   }, [drawSheep]);
 
-  return <canvas ref={ref} width="500" height="600" style={style} className="rounded"/>;
+  return (
+      <div className="rounded field-bg d-flex justify-content-center">
+        <canvas ref={ref} width="360" height="600" style={style} className="rounded"/>
+      </div>
+    )
 };
 
 export default Field;

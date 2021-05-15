@@ -3,6 +3,7 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import { isName } from "../../utils/validator";
 import { GENDERS } from "../constants/constants";
 import { getRandomCoord } from "../../utils/random";
+import "./Form.css";
 
 interface IState {
   name: string;
@@ -68,6 +69,9 @@ const Form: React.FunctionComponent<IFormProps> = ({
   return (
     <form onSubmit={onHandleSubmit}>
       <div className="form-group">
+        <label htmlFor="gender" className="text-white text-bg">
+          Enter a name for your sheep
+        </label>
         <input
           type="text"
           className="form-control"
@@ -76,7 +80,7 @@ const Form: React.FunctionComponent<IFormProps> = ({
           name="name"
           value={formState.name}
           onChange={onHandleChange}
-          maxLength={50}
+          maxLength={20}
         />
 
         {formState.displayError && (
@@ -85,6 +89,9 @@ const Form: React.FunctionComponent<IFormProps> = ({
       </div>
 
       <div className="form-group">
+        <label htmlFor="gender" className="text-white text-bg">
+          Select a gender
+        </label>
         <select
           className="form-control text-capitalize"
           aria-label="Select sheep gender"
@@ -102,7 +109,7 @@ const Form: React.FunctionComponent<IFormProps> = ({
 
       <div aria-label="Form Submit button group">
         <button
-          className="btn btn-primary mr-1 mb-1"
+          className="btn btn-success mr-1 mb-1 btn-block btn-custom"
           type="submit"
           name="submit"
         >
@@ -110,7 +117,7 @@ const Form: React.FunctionComponent<IFormProps> = ({
         </button>
 
         <button
-          className="btn btn-success mr-1 mb-1"
+          className="btn btn-success mr-1 mb-1 btn-block btn-custom"
           type="button"
           name="button"
           onClick={brandSheep}
@@ -120,7 +127,7 @@ const Form: React.FunctionComponent<IFormProps> = ({
         </button>
 
         <button
-          className="btn btn-info mb-1"
+          className="btn btn-success mb-1 btn-block btn-custom"
           type="button"
           name="button"
           onClick={breedSheep}

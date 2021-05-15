@@ -1,0 +1,21 @@
+.text-bg {
+    background: #8aa110;
+    padding: 2px 8px;
+}
+
+.btn-custom {
+    background-image: linear-gradient(to top, #558b2f 0%, #558b2f 50%, #689f38 50%, #689f38 100%);
+    border:none;
+    border-radius: 0;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-custom:hover, .btn-custom:focus {
+    transform: translateY(2px);
+    outline: none;
+}
+
+.btn-custom:disabled {
+    cursor: not-allowed;
+    transform: translateY(0px);
+}

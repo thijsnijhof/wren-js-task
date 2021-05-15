@@ -7,7 +7,7 @@ interface IErrorMessageProps {
 const ErrorMessage: React.FunctionComponent<IErrorMessageProps> = ({
   message
 }) => {
-  return <p className="text-danger">{message}</p>;
+  return <small className="text-danger">{message}</small>;
 };
 
 export default ErrorMessage;
