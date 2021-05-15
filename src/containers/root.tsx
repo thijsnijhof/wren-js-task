@@ -4,7 +4,7 @@
  *
  * Allows the user to brand a sheep on the field when there are unbranded sheep on the field
  * Disables the "Brand a sheep" button when: all sheep are branded || there are no sheep on the field
- * Disables the "Breed a sheep" button when: there are no sheep of the opposite sex on the field || only one sheep is on the field
+ * Disables the "Breed a sheep" button when: there are no sheep of the opposite sex on the field that are unbranded || only one sheep is on the field
  * Branding a sheep colors a random unbranded sheep green by updating the "branded" property on the object.
  *
  * When two sheep of opposite sex are on the field, and are unbranded, the user can breed sheep.
