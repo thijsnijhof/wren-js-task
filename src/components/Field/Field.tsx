@@ -50,7 +50,7 @@ const Field: React.FunctionComponent<IFieldProps> = ({ data}) => {
   }, [drawSheep]);
 
   return (
-      <div className="rounded field-bg d-flex justify-content-center">
+      <div className="rounded field-bg d-flex justify-content-center mb-4 mb-sm-0">
         <canvas ref={ref} width="360" height="600" style={style} className="rounded"/>
       </div>
     )
